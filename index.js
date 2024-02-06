@@ -10,8 +10,8 @@ async  function init() {
     const res = await fetch("https://words.dev-apis.com/word-of-the-day");
     const resObj = await res.json();
     const word = resObj.word.toUpperCase();
-
-    console.log(word);
+      const wordParts = word.split("");
+    setLoading(false);
 
 
     // funtion to add letter in the box
@@ -39,6 +39,26 @@ async  function init() {
 
         // do all marking
 
+        const guessParts = currentGuess.split("");
+        
+        for(let i = 0; i< 5; i++) {
+            //mark as correct
+            if (guessParts[i] === wordParts[i]) {
+                letters[currentRow * 5 + i].classList.add("correct");
+                
+            }
+        }
+
+        for (let i = 0; i < 5; i++) {
+          //mark as correct
+          if (guessParts[i] === wordParts[i]) {
+          } else if ( wordParts.includes(guessParts[i])) {
+            letters[currentRow * 5 + i].classList.add("close");
+          } else {
+            letters[currentRow * 5 + i].classList.add("wrong");
+          }
+          
+        }
 
         // won or loose 
 
@@ -53,7 +73,6 @@ async  function init() {
 
     document.addEventListener('keydown' , function handleKeyPress (event) {
         const action = event.key;
-        console.log(action);
         if(action === 'Enter') {
             commit();
         } else if (action === 'Backspace') {
@@ -72,7 +91,19 @@ function isLetter(letter){
 
 
 function setLoading(isLoading) {
-    loadingDiv.classList.toggle('hidden' , isLoading);
+    loadingDiv.classList.toggle('show' , isLoading);
+}
+
+function makeMap(array) {
+  const obj = {};
+  for (let i = 0; i < array.length; i++) {
+    if (obj[array[i]]) {
+      obj[array[i]]++;
+    } else {
+      obj[array[i]] = 1;
+    }
+  }
+  return obj;
 }
 
 init();
