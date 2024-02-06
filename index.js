@@ -6,6 +6,9 @@ async  function init() {
     let currentGuess = '';
     let currentRow = 0;
 
+
+    const res = await fetch("https://words.dev-apis.com/word-of-the-day");
+
     // funtion to add letter in the box
     function addLetter(letter){
         if (currentGuess.length < 5) {
@@ -32,7 +35,7 @@ async  function init() {
         // do all marking
 
 
-        // won or loose
+        // won or loose 
 
         currentRow++;
         currentGuess = "";
