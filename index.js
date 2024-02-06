@@ -10,7 +10,7 @@ async  function init() {
     const res = await fetch("https://words.dev-apis.com/word-of-the-day");
     const resObj = await res.json();
     const word = resObj.word.toUpperCase();
-      const wordParts = word.split("");
+    const wordParts = word.split("");
     setLoading(false);
 
 
@@ -40,21 +40,27 @@ async  function init() {
         // do all marking
 
         const guessParts = currentGuess.split("");
+        const map = makeMap(wordParts);
+        console.log(map);
         
         for(let i = 0; i< 5; i++) {
             //mark as correct
             if (guessParts[i] === wordParts[i]) {
                 letters[currentRow * 5 + i].classList.add("correct");
-                
+                map[guessParts[i]]--;
             }
         }
 
         for (let i = 0; i < 5; i++) {
           //mark as correct
           if (guessParts[i] === wordParts[i]) {
-          } else if ( wordParts.includes(guessParts[i])) {
+          } else if (
+            wordParts.includes(map[guessParts[i]] && map[guessParts[i]] > 0)) 
+            {
             letters[currentRow * 5 + i].classList.add("close");
-          } else {
+            map[guessParts[i]]--;
+            } 
+            else {
             letters[currentRow * 5 + i].classList.add("wrong");
           }
           
