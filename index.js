@@ -8,6 +8,11 @@ async  function init() {
 
 
     const res = await fetch("https://words.dev-apis.com/word-of-the-day");
+    const resObj = await res.json();
+    const word = resObj.word.toUpperCase();
+
+    console.log(word);
+
 
     // funtion to add letter in the box
     function addLetter(letter){
@@ -63,6 +68,11 @@ async  function init() {
 
 function isLetter(letter){
     return /^[a-zA-Z]$/.test(letter);
+}
+
+
+function setLoading(isLoading) {
+    loadingDiv.classList.toggle('hidden' , isLoading);
 }
 
 init();
